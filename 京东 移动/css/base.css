@@ -1,0 +1,61 @@
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-hightlight-color: transparent;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    font-family: "MicroSoft YaHei", sans-serif;
+    color: #333; 
+}
+
+ul,ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+input {
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.f_left {
+    float: left;
+}
+
+.f_right {
+    float: right;
+}
+
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+[class ^= "icon_"] {
+    background: url(../img/sprites.png) no-repeat;
+    background-size: 200px 200px;
+}
+
+.m_l {
+    margin-left: 10px;
+}
+
+.m_r {
+    margin-right: 10px;
+}

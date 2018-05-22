@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇游戏</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            margin: 0 auto;
+            width: 600px;
+            position: relative;
+        }
+        .box h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .box p {
+            position: absolute;
+            left: 65%;
+            color: red;
+            font-size: 20px;
+            display: inline-block;
+        }
+        .box p span {
+            color: #000;
+        }
+        #Pause, #Start, #Refresh, #Speed {
+            width: 50px;
+            height: 30px;
+            background: skyblue;
+            color: #fff;
+            margin-left: 15px;
+            border: 1px solid skyblue;
+            border-radius: 10%;
+            margin-bottom: 15px;
+        }
+        #Pause {
+            margin-left: 18%;
+        }
+        .snake_map {
+            margin: 0 auto;
+            border: 1px solid #000;
+        }
+        .col {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            background: #fff;
+            border: 1px solid lightgray;
+            float: left;
+        }
+        .snake {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            background: #000;
+            border: 1px solid lightgray;
+            float: left;
+        }
+        .egg {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            background: red;
+            border: 1px solid lightgray;
+            float: left;
+        }
+    </style>
+    <script src="C:\Users\Administrator\practice\有用的\tools.js"></script>
+</head>
+<body>
+    <div class="box">
+        <h1>贪吃蛇游戏</h1>
+        <input type="button" value="Pause" id="Pause">
+        <input type="button" value="Start" id="Start">
+        <input type="button" value="Refresh" id="Refresh">
+        <input type="button" value="Speed" id="Speed">
+        <p>
+            score: <span>0</span>
+        </p>
+        <div class="snake_map"></div>
+    </div>
+    <script type="text/javascript">
+        var rowNumber = 25;
+        var columnNumber = 20;
+        var snake_map = document.getElementsByClassName('snake_map')[0];
+        var score = 0;
+
+        snake_map.style.width = columnNumber * 20 + 'px';
+        snake_map.style.height = rowNumber * 20 + 'px';
+        
+        var twoDIMArr = [];
+        for(var i = 0; i < rowNumber; i++) {
+            var oneDIMArr = [];
+            for(var j = 0; j < columnNumber; j++) {
+                var div = document.createElement('div');
+                div.className = 'col';
+                snake_map.appendChild(div);
+                oneDIMArr.push(div);
+            }
+            twoDIMArr.push(oneDIMArr);
+        }
+        
+        var x = 0;
+        var y = 2;
+        var snake = [];
+        for(var i = 0; i < 3; i++) {
+            twoDIMArr[0][i].className = 'snake';
+            snake.push(twoDIMArr[0][i]);
+        }
+        
+        var delay = null;
+        var keyWord = 'right';
+        var key = true;
+        document.onkeydown = function (event) {
+            event = event || window.event;
+            // if(!key) {
+            //     console.log("a");
+            //     return ;
+            // }
+            if(event.keyCode == 37 && keyWord == 'right') {
+                return false;
+            }else if(event.keyCode == 38 && keyWord == 'down') {
+                return false;
+            }else if(event.keyCode == 39 && keyWord == 'left') {
+                return false;
+            }else if(event.keyCode == 40 && keyWord == 'up') {
+                return false;
+            }
+            if(event.keyCode == 37) {
+                keyWord = 'left';
+            }else if(event.keyCode == 38) {
+                keyWord = 'up';
+            }else if(event.keyCode == 39) {
+                keyWord = 'right';
+            }else {
+                keyWord = 'down';
+            }
+            var key =false;
+            //无法延时 
+            if(!key) {
+                var delay = setTimeout(function () {
+                console.log(key = true);
+            }, 1000);
+            }
+            
+        }
+        
+        var eggX;
+        var eggY
+        function createEgg () {
+            eggX = randomMM(0, rowNumber - 1);
+            eggY = randomMM(0, columnNumber - 1);
+            if(twoDIMArr[eggX][eggY].className == 'snake') {
+                createEgg();
+                return false;
+            }
+            twoDIMArr[eggX][eggY].className = 'egg';
+        } 
+        
+        var span = document.getElementsByTagName('span')[0];
+        var snakeSports = function () {
+            if(keyWord == 'left') {
+                y--;
+            }else if(keyWord == 'up') {
+                x--;
+            }else if(keyWord == 'right') {
+                y++;
+            }else {
+                x++;
+            }
+            if(x < 0 || y < 0 || x >= rowNumber || y >= columnNumber) {
+                alert("你好菜啊");
+                clearInterval(startTimer); 
+                speed = 300;
+                return false;
+            }
+
+            if(x == eggX && y == eggY) { 
+                createEgg();
+                score++;
+                span.innerText = score;
+            }else if(twoDIMArr[x][y].className == 'snake') {
+                alert("你好菜啊");
+                clearInterval(startTimer); 
+                speed = 300;
+                return false;
+            }else {
+                snake[0].className = 'col';
+                snake.shift();
+            }
+            twoDIMArr[x][y].className = 'snake';
+            snake.push(twoDIMArr[x][y]);
+        }
+        
+        createEgg();
+        var startTimer = setInterval(snakeSports, 300);
+        var Pause = document.getElementById('Pause');
+        var Start = document.getElementById('Start');
+        var Refresh = document.getElementById('Refresh');
+        var Speed = document.getElementById('Speed');
+        var speed = 300;
+
+        Pause.onclick = function () {
+            clearInterval(startTimer);
+        }
+
+        Start.onclick = function () {
+            startTimer = setInterval(snakeSports, speed);
+        }
+
+        Refresh.onclick = function () {
+            window.loaction.reload();
+        }
+
+        Speed.onclick = function () {
+            speed -= 30;
+            clearInterval(startTimer);
+            startTimer = setInterval(snakeSports, speed);
+        }
+    </script>
+</body>
+</html>

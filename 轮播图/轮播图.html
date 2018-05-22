@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+
+    .warrap {
+        position: relative;
+        margin: 100px auto 0;
+        width: 370px;
+        height: 320px;
+        border: 1px solid #e0e0e0;
+        overflow: hidden;
+    }
+
+    .warrap ul {
+        position: absolute;
+        left: 0;
+        width: 1850px;
+        height: 320px;
+    }
+
+    .warrap ul li {
+        float: left;
+        width: 370px;
+        height: 320px;
+    }
+
+    .btnLR span {
+        position: absolute;
+        width: 30px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        background: #aaa;
+        font-size: 26px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .btnLR .btnL {
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .btnLR .btnR {
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .warrap .cir {
+        position: absolute;
+        left: 50%;
+        bottom: 7px;
+        transform: translateX(-50%);
+    }
+
+    .warrap .cir span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        margin-right: 5px;
+    }
+
+    .warrap .cir ._cir {
+        background: rgb(7, 115, 134);
+    }
+</style>
+
+<body>
+    <div class="warrap">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="p0.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="p1.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="p2.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="p3.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="p0.png" alt="">
+                </a>
+            </li>
+        </ul>
+        <div class="btnLR">
+            <span class="btnL">&lt;</span>
+            <span class="btnR">&gt;</span>
+        </div>
+        <div class="cir">
+            <span class="_cir"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script src="../../tools.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementsByClassName('warrap')[0].getElementsByTagName('ul')[0];
+    var oLi = oUl.children[0];
+    var btnL = document.getElementsByClassName('btnLR')[0].getElementsByClassName('btnL')[0];
+    var btnR = document.getElementsByClassName('btnLR')[0].getElementsByClassName('btnR')[0];
+    var oSpan = document.getElementsByClassName('cir')[0].getElementsByTagName('span');
+    var num = oUl.children.length;
+    var index = 0;
+    var lock = true;
+    var direction;
+    var timer;
+
+    btnL.onclick = function () {
+        autoMove('left->right');
+    }
+
+    btnR.onclick = function () {
+        autoMove('right->left')
+    }
+
+    function autoMove(direction) {
+        clearTimeout(timer);
+        if(lock) {
+            lock = false;
+            if(direction == 'right->left' || !direction) {
+                if(oUl.offsetLeft == oLi.offsetWidth * (2 - num)) {
+                        index = -1;
+                    }
+                index++;
+                startMove(oUl, {left: oUl.offsetLeft - oLi.offsetWidth}, function() {
+                    if(oUl.offsetLeft == oLi.offsetWidth * (1 - num)) {
+                        oUl.style.left = '0px';
+                    }
+                    lock = true;
+                    timer = setTimeout(autoMove, 1500);
+                })
+            }else if(direction == 'left->right') {
+                if(oUl.offsetLeft == 0) {
+                    oUl.style.left = oLi.offsetWidth * (1 - num) + 'px';
+                    index = 4;
+                }
+                index--;
+                startMove(oUl, {left: oUl.offsetLeft + oLi.offsetWidth}, function () {
+                    lock = true;
+                    timer = setTimeout(autoMove, 1500);
+                })
+            }
+
+            for(var i = 0; i < oSpan.length; i++) {
+                oSpan[i].className = '';
+            }
+            oSpan[index].className = '_cir';
+        }
+    }
+
+    timer = setTimeout(autoMove, 1500);
+
+</script>
+
+</html>

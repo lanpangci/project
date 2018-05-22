@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            width: 100%;
+            height: 1000px;
+            /* text-align: center;只是针对文本而言的 */
+        }
+
+        .wrapper .box {
+            margin: 100px auto 0;
+            width: 350px;
+            height: 400px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .wrapper .box .top {
+            width: 100%;
+            height: 40px;
+            background: #eee;
+        }
+
+        .wrapper .box .top p {
+            float: left;
+            line-height: 40px;
+            padding-left: 50px;
+            color: #aaa;
+            font-weight: bold;
+            background: url(./0.jpg) no-repeat 10px;
+            background-size: 20%, 20%;
+        }
+
+        .wrapper .box .top img {
+            float: right;
+            width: 30px;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+
+        .wrapper .box .content {
+            position: relative;
+            width: 90%;
+            height: 100px;
+            margin: 20px auto;
+        }
+
+        .wrapper .box .content a {
+            text-decoration: none;
+            float: right;
+            right: 0;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .wrapper .box .content input {
+            clear: both;
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            margin: 10px 0;
+            color: #aaa;
+            padding-left: 20px;
+        }
+
+        .wrapper .box .content .con_2 {
+            width: 100%;
+        }
+
+        .wrapper .box .content .con_2 input {
+            margin: 0;
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+        }
+
+        .wrapper .box .content .con_2 span {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .wrapper .box .content button {
+            margin-top: 20px;
+            width: 100%;
+            height: 50px;
+            background: blue;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .wrapper .fin {
+            box-sizing: border-box;
+            clear: both;
+            width: 100%;
+            height: 100px;
+            margin-top: 170px;
+            border-top: 1px solid #aaa;
+            background: #e0e0e0;
+            padding-left: 5%;
+            padding-top: 10px;
+        }
+
+        .wrapper .fin .fin_0 span {
+            color: #aaa;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <p>login</p>
+    </div>
+</body>
+<script src="./../jquery-3.3.1.js"></script>
+<script>
+
+    function login () {
+        $('<div class="box">\
+            <div class="top">\
+                <p>登录百度账号</p>\
+                <img src="./close.png" alt="">\
+            </div>\
+            <div class="content">\
+                <a href="#">短信快捷登录</a>\
+                <input type="text" placeholder="手机/邮箱/用户名">\
+                <input type="password" placeholder="密码">\
+                <div class="con_2">\
+                    <input type="checkbox" checked>\
+                    <span>下次自动登录</span>\
+                    <a href="#">登录遇到问题</a>\
+                </div>\
+                <button>登录</button>\
+                <a href="#">立即注册</a>\
+            </div>\
+            <div class="fin">\
+                <div class="fin_0">\
+                    <span>可以使用以下方式登录</span>\
+                </div>\
+                <div class="icon">\
+                </div>\
+            </div>\
+        </div>').appendTo('.wrapper');
+    }
+        $('p').on('click', function () {
+                login();
+        })
+
+        $('body').on('click', 'img', function () {
+            $('.box').remove();
+        })
+
+</script>
+
+</html>
